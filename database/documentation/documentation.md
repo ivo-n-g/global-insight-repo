@@ -20,48 +20,71 @@ restricts data entry to weekends only.
 ### Logical Database Design
 
 ● Goal: Design a robust, redundancy-free data structure.
+
 ● Normalization:
-○ 1NF: Eliminated repeating groups (e.g., 2023_GDP, 2024_GDP) by creating a vertical
+
+  ○ 1NF: Eliminated repeating groups (e.g., 2023_GDP, 2024_GDP) by creating a vertical
 MARKET_DATA table.
-○ 2NF: Removed partial dependencies by separating CURRENCY_CODE into the
+
+  ○ 2NF: Removed partial dependencies by separating CURRENCY_CODE into the
 COUNTRIES table.
-○ 3NF: Removed transitive dependencies by isolating REGION_NAME into a lookup
+
+  ○ 3NF: Removed transitive dependencies by isolating REGION_NAME into a lookup
 table (REGIONS).
+
 ● Artifacts: Entity Relationship Diagram (ERD) and Data Dictionary.
 
 ### Physical Database Setup
 
-
 ● Goal: Configure the Oracle Pluggable Database (PDB).
+
+
 ● Technical Specs:
-○ PDB Name: tue_27904_ivo_globalinsight_db
-○ Admin User: IVONKAKA (Granted DBA privileges).
-○ Storage: Created tbs_globalinsight_data with AUTOEXTEND ON (100MB Init).
-○ Config: Enabled ARCHIVELOG mode for disaster recovery.
+
+  ○ PDB Name: tue_27904_ivo_globalinsight_db
+
+  ○ Admin User: IVONKAKA (Granted DBA privileges).
+
+  ○ Storage: Created tbs_globalinsight_data with AUTOEXTEND ON (100MB Init).
+
+  ○ Config: Enabled ARCHIVELOG mode for disaster recovery.
 
 ### Schema Implementation & Data Population
 
 
 ● Goal: Create tables and inject realistic datasets.
+
+
 ● Schema: Implemented 5 core tables (REGIONS, COUNTRIES, INDICATORS,
 MARKET_DATA, AUDIT_LOG) with Primary/Foreign Key constraints.
+
 ● Data Generation:
-○ Imported 100 Real-World Countries (United States, Rwanda, China, etc.).
-○ Defined 100 Economic Indicators (GDP Growth, Inflation, Trade Tariffs).
-○ Used PL/SQL loops (DBMS_RANDOM) to generate ~50,000 rows of market data.
-○ injected Edge Cases (Nulls and Boundary Values) for robust testing.
+
+  ○ Imported 100 Real-World Countries (United States, Rwanda, China, etc.).
+
+  ○ Defined 100 Economic Indicators (GDP Growth, Inflation, Trade Tariffs).
+
+  ○ Used PL/SQL loops (DBMS_RANDOM) to generate ~50,000 rows of market data.
+
+  ○ injected Edge Cases (Nulls and Boundary Values) for robust testing.
 
 ### Advanced PL/SQL Development
 
 
 ● Goal: Automate business logic using server-side code.
+
 ● Procedures: Created transactional procedures (e.g., PROC_SAFE_MARKET_INSERT) with
 SAVEPOINT and ROLLBACK for safe data entry.
+
 ● Functions:
-○ FN_CALCULATE_MARKET_SCORE: Computes weighted risk scores (0-100).
-○ FN_GET_RISK_LABEL: Categorizes scores into "High/Medium/Low Risk".
-● Packages: Encapsulated logic into PKG_GLOBAL_INSIGHT for modularity.
-● Analytics: Utilized Window Functions (RANK, LAG, OVER) to generate reports comparing
+  
+  ○ FN_CALCULATE_MARKET_SCORE: Computes weighted risk scores (0-100).
+  
+  ○ FN_GET_RISK_LABEL: Categorizes scores into "High/Medium/Low Risk".
+  
+  ● Packages: Encapsulated logic into PKG_GLOBAL_INSIGHT for modularity.
+  
+  ● Analytics: Utilized Window Functions (RANK, LAG, OVER) to generate reports comparing
 countries against regional averages.
 
 
@@ -69,12 +92,16 @@ countries against regional averages.
 
 
 ● Goal: Enforce the "Weekend-Only" business rule.
+
 ● Security Implementation:
-○ Holiday Management: Created PUBLIC_HOLIDAYS table to track restricted dates.
-○ Compound Trigger: TRG_STRICT_SECURITY fires before any
+  
+  ○ Holiday Management: Created PUBLIC_HOLIDAYS table to track restricted dates.
+
+  ○ Compound Trigger: TRG_STRICT_SECURITY fires before any
 INSERT/UPDATE/DELETE on MARKET_DATA. It checks SYSDATE and blocks
 transactions on Weekdays (Mon-Fri) or Holidays.
-○ Auditing: Implemented PRAGMA AUTONOMOUS_TRANSACTION to log all failed
+  
+  ○ Auditing: Implemented PRAGMA AUTONOMOUS_TRANSACTION to log all failed
 attempts (ACCESS_DENIED) to the AUDIT_LOG table, even if the main transaction
 rolls back.
 
