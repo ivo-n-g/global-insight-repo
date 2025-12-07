@@ -54,7 +54,7 @@ Run the provided SQL scripts in the following exact order:
 
 For detailed technical specifications, please refer to the documentation files included in this repository:
 
-* **[System Architecture](architecture.md):** Overview of the PDB structure, technical stack, and schema layers.
-* **[Design Decisions](design_decisions.md):** Justification for technical choices (e.g., Normalization, Compound Triggers, Autonomous Transactions).
+* **[System Architecture](documentation/architecture.md):** Overview of the PDB structure, technical stack, and schema layers.
+* **[Design Decisions](documentation/design_decisions.md):** Justification for technical choices (e.g., Normalization, Compound Triggers, Autonomous Transactions).
 * **[Business Intelligence](business_intelligence/bi_requirements.md):** Definition of KPIs, User Personas, and Dashboard requirements.
 * **[Dashboard Mockups](business_intelligence/dashboards.md):** Wireframes for Executive, Security, and Performance views.
