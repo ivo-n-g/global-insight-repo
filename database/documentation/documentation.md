@@ -104,7 +104,7 @@ rolls back.
 
 The system was built using the following ordered SQL scripts:
 **Script Name Description**
-01_create_pdb.sql PDB creation, User setup, Tablespace config.
+01_PDB_Creation.sql PDB creation, User setup, Tablespace config.
 02_create_tables.sql DDL for Tables, Constraints, and Sequences.
 03_insert_data.sql Bulk loading of Regions, Countries, and Indicators.
 04_market_data.sql PL/SQL loops to generate statistical market data.
