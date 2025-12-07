@@ -15,28 +15,7 @@ Database, the system standardizes how investment risks are calculated. The syste
 a 3NF normalized schema, automated risk scoring via PL/SQL, and a strict security layer that
 restricts data entry to weekends only.
 
-## 2. System Development Lifecycle (SDLC)
 
-### Requirement Analysis
-
-```
-● Goal: Define the scope and identifying user roles.
-● Outcome: Identified three key actors:
-○ Data Analyst: Inputs raw economic indicators (GDP, Inflation).
-○ System (MIS): Validates data and restricts access based on time.
-○ Strategy Manager: Consumes BI reports for decision-making.
-```
-### Business Process Modeling (BPMN)
-
-```
-● Goal: Visualize the workflow and decision gateways.
-● Implementation: Created a BPMN 2.0 Diagram featuring:
-○ Swimlanes for Analyst, System, and Manager.
-○ A critical "Time Check" gateway that rejects transactions on Weekdays/Holidays.
-```
-
-```
-○ A feedback loop for data validation errors.
 ```
 ### Logical Database Design
 
